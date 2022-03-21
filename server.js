@@ -14,7 +14,7 @@ exports.add = async (ctx) => {
 	ctx.body = result;
 };
 
-exports.getArchiveData = async (ctx) => {
+exports.getArchiveList = async (ctx) => {
 	let dataa = {};
 	let tagData = await tagGroupModel.findAll();
 	for (let i of tagData) {
@@ -26,14 +26,14 @@ exports.getArchiveData = async (ctx) => {
 				arr.push({
 					archiveTitle: a.archiveTitle,
 					archiveDate: a.archiveDate,
-					archiveContent: a.archiveContent,
+					archiveId: a._id,
 				});
 				dataa[`${i.tagName}`] = arr;
 			} else {
 				dataa[`${i.tagName}`].push({
 					archiveTitle: a.archiveTitle,
 					archiveDate: a.archiveDate,
-					archiveContent: a.archiveContent,
+					archiveId: a._id,
 				});
 			}
 		}
@@ -48,3 +48,18 @@ exports.change = async (ctx) => {
 	let result = await blogItemFnc.update(conditions, doc);
 	ctx.body = result;
 };
+
+exports.getArchiveData = async (ctx) => {
+	let archiveId = ctx.request.query.archiveId
+	let archiveData = await archiveModel.findId(archiveId)
+	let tagData = await tagGroupModel.findId(archiveData.tagId)
+	ctx.body = {
+		code:0,
+		data:{
+			archiveDate:archiveData.archiveDate,
+			archiveContent:archiveData.archiveContent,
+			archiveTitle:archiveData.archiveTitle,
+			tagName:tagData.tagName
+		}
+	}
+}
