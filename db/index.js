@@ -2,14 +2,14 @@ class Mongodb {
 	constructor(model) {
     this.model = model
   }
-	//查询
-	findAll(condition){
+	//查询每个标签下时间倒序的前五条
+	findTag(condition,sort){
 		return new Promise((resolve, reject) => {
-			this.model.find(condition,(err,res)=>{
-				if(err){
-					reject(err)
+			this.model.find(condition).sort(sort).limit(5).exec((err,res) => {
+				if (err) {
+					reject(err);
 				}
-				resolve(res)
+				resolve(res);
 			})
 		})
 	}

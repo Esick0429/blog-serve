@@ -16,9 +16,9 @@ exports.add = async (ctx) => {
 
 exports.getArchiveList = async (ctx) => {
 	let dataa = {};
-	let tagData = await tagGroupModel.findAll();
+	let tagData = await tagGroupModel.findTag(null,{_id:-1});
 	for (let i of tagData) {
-		let archiveData = await archiveModel.findAll({ tagId: i._id });
+		let archiveData = await archiveModel.findTag({ tagId: i._id },{archiveDate:-1});
     // dataa.push(archiveData)
 		for (let a of archiveData) {
 			if (!dataa[`${i.tagName}`]) {
