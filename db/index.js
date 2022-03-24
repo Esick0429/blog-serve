@@ -3,7 +3,7 @@ class Mongodb {
     this.model = model
   }
 	//查询每个标签下时间倒序的前五条
-	findTag(condition,sort){
+	findFiveLimit(condition,sort){
 		return new Promise((resolve, reject) => {
 			this.model.find(condition).sort(sort).limit(5).exec((err,res) => {
 				if (err) {
