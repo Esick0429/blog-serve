@@ -5,5 +5,7 @@ const server  = require('./server')
 router.get('/add',server.add)
 router.get('/api/getArchiveList',server.getArchiveList)
 router.get('/api/getArchiveData',server.getArchiveData)
+router.get('/api/getTagList',server.getTagList)
+router.get('/api/getTagArchiveList',server.getTagArchiveList)
 router.get('/change',server.change)
 module.exports =  router

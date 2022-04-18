@@ -1,6 +1,6 @@
-const blogItem = require('./db/blogItem');
-const tagGroup = require('./db/tagGroup');
-const archive = require('./db/archive');
+const blogItem = require('./db/schema/blogItem');
+const tagGroup = require('./db/schema/tagGroup');
+const archive = require('./db/schema/archive');
 const dbfunc = require('./db');
 let blogItemModel = new dbfunc(blogItem);
 let tagGroupModel = new dbfunc(tagGroup);
@@ -27,6 +27,7 @@ exports.getArchiveList = async (ctx) => {
 					archiveTitle: a.archiveTitle,
 					archiveDate: a.archiveDate,
 					archiveId: a._id,
+					tagId:a.tagId
 				});
 				dataa[`${i.tagName}`] = arr;
 			} else {
@@ -34,6 +35,7 @@ exports.getArchiveList = async (ctx) => {
 					archiveTitle: a.archiveTitle,
 					archiveDate: a.archiveDate,
 					archiveId: a._id,
+					tagId:a.tagId
 				});
 			}
 		}
@@ -62,4 +64,30 @@ exports.getArchiveData = async (ctx) => {
 			tagName:tagData.tagName
 		}
 	}
+}
+
+
+exports.getTagList = async (ctx) => {
+	let tagListData = await tagGroupModel.findAll()
+	let data = tagListData.map(item => {
+		return {
+			tagId: item._id,
+			tagName: item.tagName,
+		}
+	})
+	ctx.body = data
+}
+
+exports.getTagArchiveList = async (ctx) => {
+	let tagName = ctx.request.query.tagName
+	let tagData = await tagGroupModel.findAll({tagName:tagName,deleted:false})
+	let archiveData = await archiveModel.findAll({tagId:tagData[0]._id,deleted:false})
+	let data = archiveData.map(item => {
+		return {
+			archiveId:item._id,
+			archiveTitle:item.archiveTitle,
+			archiveDate:item.archiveDate,
+		}
+	})
+	ctx.body = data
 }
