@@ -8,4 +8,5 @@ router.get('/api/getArchiveData',server.getArchiveData)
 router.get('/api/getTagList',server.getTagList)
 router.get('/api/getTagArchiveList',server.getTagArchiveList)
 router.get('/change',server.change)
+router.get('/api/getEverydayQuotes',server.getEverydayQuotes)
 module.exports =  router

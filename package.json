@@ -10,9 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "koa": "^2.13.4",
+    "axios": "^0.26.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.1.1",
-    "koa2-cors": "^2.0.6"
+    "koa2-cors": "^2.0.6",
+    "node-fetch": "^3.2.4"
   },
   "devDependencies": {
     "mongoose": "^6.2.6"

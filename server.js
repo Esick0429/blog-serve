@@ -1,6 +1,8 @@
+const axios = require('axios')
 const blogItem = require('./db/schema/blogItem');
 const tagGroup = require('./db/schema/tagGroup');
 const archive = require('./db/schema/archive');
+
 const dbfunc = require('./db');
 let blogItemModel = new dbfunc(blogItem);
 let tagGroupModel = new dbfunc(tagGroup);
@@ -90,4 +92,10 @@ exports.getTagArchiveList = async (ctx) => {
 		}
 	})
 	ctx.body = data
+}
+
+exports.getEverydayQuotes = async (ctx) => {
+	let res = await axios
+  .get('http://apiv3.shanbay.com/weapps/dailyquote/quote/')
+	ctx.body = res.data
 }
