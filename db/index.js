@@ -17,6 +17,20 @@ class Mongodb {
         });
     });
   }
+  //分页查询{
+  findPage(condition, skip, limit) {
+    return new Promise((resolve, reject) => {
+      this.model
+        .find(condition, (err, res) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(res);
+        })
+        .skip(skip)
+        .limit(limit);
+    });
+  }
   // 查询一条
   findId(condition) {
     return new Promise((resolve, reject) => {
